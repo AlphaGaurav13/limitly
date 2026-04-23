@@ -1,11 +1,11 @@
-# 🚀 Limitly  
+#  Limitly  
 ### Smart Rate Limiting Engine for Modern APIs
 
 Limitly is a configurable, multi-strategy rate limiting service built using the MERN stack. It allows developers to protect their applications from abuse by defining custom request limits using API keys.
 
 ---
 
-## 🧠 Overview
+## Overview
 
 Limitly acts as a centralized rate limiting engine where clients can:
 
