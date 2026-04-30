@@ -1,6 +1,7 @@
 #  Limitly  
 ### Smart Rate Limiting Engine for Modern APIs
 
+I built a distributed rate limiting service using Redis, Lua scripts for atomic operations, JWT-based authentication, API key management, and analytics tracking.
 Limitly is a configurable, multi-strategy rate limiting service built using the MERN stack. It allows developers to protect their applications from abuse by defining custom request limits using API keys.
 
 ---
