@@ -39,7 +39,7 @@ class SlidingWindowLog extends RateLimiterStrategy {
 
         const result = await client.eval(SLIDING_WINDOW_LUA, {
             keys: [key],
-            arguments: [now, window, limit]
+            arguments: [String(now), String(window), String(limit)]
         });
 
         const allowed = result[0] === 1;
