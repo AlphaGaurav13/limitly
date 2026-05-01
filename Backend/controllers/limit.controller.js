@@ -11,7 +11,7 @@ exports.checkLimit = async (req, res) => {
             });
         }
         
-        const plan = req.user.plan;
+        const plan = req.user.plan || "free";
 
         const result = await rateLimiterService.checkRateLimit({
             apiKey,
@@ -20,7 +20,7 @@ exports.checkLimit = async (req, res) => {
             plan
         });
 
-        await analyticsService.track({
+        await AnalyticsService.track({
             apiKey,
             endpoint,
             userId,

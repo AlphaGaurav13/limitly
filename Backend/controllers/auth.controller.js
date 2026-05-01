@@ -1,5 +1,7 @@
 const { createUser, getUser } = require("../services/auth/userStore");
+const User = require("../models/User")
 const bcrypt = require("bcrypt");
+
 
 const { generateToken } = require("../utils/jwt");
 
@@ -7,14 +9,20 @@ exports.register = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        
 
-        const existing  = await getUser(email);
+        const existing  = await User.findOne({email});
 
         if(existing) {
             return res.status(500).json({ error: "User already exists" });
         }
 
-        const user = await createUser(email, password);
+        const hashed = await bcrypt.hash(password, 10);
+
+        const user = await User.create({email, password:hashed});
+
+        const token = generateToken(user);
+        
 
         return res.json({
             message: "User registered",
@@ -30,7 +38,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await getUser(email);
+        const user = await User.findOne({email});
 
         if(!user) {
             return res.status(400).json({ error: "Invalid credentials" });

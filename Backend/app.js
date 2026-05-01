@@ -1,13 +1,18 @@
 const express = require("express");
-
+const cors = require("cors");
 const app = express();
 
 
 const limitRoutes = require("./routes/limit.routes");
 const authRoutes = require("./routes/auth.routes");
+const apiKeyRoutes = require("./routes/apiKey.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", limitRoutes);
+app.use("/api", apiKeyRoutes);
+app.use("/api", analyticsRoutes);
 
 module.exports = app;
