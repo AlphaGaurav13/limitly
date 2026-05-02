@@ -4,9 +4,9 @@ const router = express.Router();
 
 
 const { checkLimit } = require("../controllers/limit.controller");
-const authMiddleware = require("../middlewares/auth.middleware");
+const apiKeyMiddleware = require("../middlewares/apikey.middleware");
 
 
-router.post("/check-limit", authMiddleware, checkLimit);
+router.post("/check-limit", apiKeyMiddleware, checkLimit);
 
 module.exports = router;

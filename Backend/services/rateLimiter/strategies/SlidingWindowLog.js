@@ -37,32 +37,42 @@ class SlidingWindowLog extends RateLimiterStrategy {
     async checkLimit(key, limit, window) {
         const now = Date.now();
 
-        const result = await client.eval(SLIDING_WINDOW_LUA, {
-            keys: [key],
-            arguments: [String(now), String(window), String(limit)]
-        });
+        try {
+            const result = await client.eval(SLIDING_WINDOW_LUA, {
+                keys: [key],
+                arguments: [String(now), String(window), String(limit)]
+            });
 
-        const allowed = result[0] === 1;
-        const count = result[1];
-        const oldest = result[2];
+            const allowed = Number(result[0]) === 1;
+            const count = Number(result[1]);
+            const oldest = Number(result[2]);
 
-        if(!allowed) {
-            const retryAfter = Math.max(
-                0,
-                Math.ceil((oldest + window - now) / 1000)
-            );
+            if(!allowed) {
+                const retryAfter = Math.max(
+                    0,
+                    Math.ceil((oldest + window - now) / 1000)
+                );
+                return {
+                    allowed: false,
+                    remaining: 0,
+                    retryAfter
+                };
+            }
+
             return {
-                allowed: false,
-                retryAfter
+                allowed: true,
+                remaining: limit - count,
+                retryAfter: 0
+            };
+        } catch (err) {
+            console.error("SlidingWindowLog error:", err);
+            // Fail open — allow the request if rate limiter has an error
+            return {
+                allowed: true,
+                remaining: -1,
+                retryAfter: 0
             };
         }
-
-
-        return {
-            allowed: true,
-            remaining: limit - count,
-            retryAfter: 0
-        };   
     }
 }
 

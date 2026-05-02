@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Dashboard({ token, setToken }) {
+export default function Dashboard({ token, setToken, goToAnalytics }) {
     const [keys, setKeys] = useState([]);
 
     const fetchKeys = async () => {
@@ -35,6 +35,8 @@ export default function Dashboard({ token, setToken }) {
         fetchKeys();
     };
 
+
+
     useEffect(() => {
         fetchKeys();
     }, []);
@@ -56,12 +58,20 @@ export default function Dashboard({ token, setToken }) {
 
             {keys.map((k) => (
                 <div key={k.key} style={{
-                    border: "1px solid gray",
-                    padding: "10px",
-                    margin: "10px 0"
+                border: "1px solid #444",
+                padding: "12px",
+                margin: "10px 0",
+                borderRadius: "8px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 }}>
-                    <p>{k.key}</p>
+                    <span>{k.key}</span>
+                    <div style={{display: "flex", gap:"10px"}}>
+                        <button onClick={() => goToAnalytics(k.key)}>Analytics</button>
+                    
                     <button onClick={() => deleteKey(k.key)}>Delete</button>
+                    </div>
                 </div>
             ))}
         </div>

@@ -48,8 +48,9 @@ async function createApiKey(userId) {
 
 async function getUserApiKeys(userId) {
     console.log("FETCHING FOR:", userId);
-    return await ApiKey.find({ userId });
-     console.log("FOUND:", keys);
+    const keys = await ApiKey.find({ userId });
+    console.log("FOUND:", keys);
+    return keys;
 }
 
 async function getApiKeyData(apiKey) {

@@ -1,5 +1,5 @@
 const { createUser, getUser } = require("../services/auth/userStore");
-const User = require("../models/User")
+const User = require("../models/user")
 const bcrypt = require("bcrypt");
 
 
@@ -9,12 +9,16 @@ exports.register = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        
+        if(!email || !password) {
+            return res.status(400).json({ error: "All fields required" });
+        }
 
         const existing  = await User.findOne({email});
 
         if(existing) {
             return res.status(500).json({ error: "User already exists" });
+        }else {
+            
         }
 
         const hashed = await bcrypt.hash(password, 10);
@@ -23,10 +27,10 @@ exports.register = async (req, res) => {
 
         const token = generateToken(user);
         
-
-        return res.json({
+        
+        return res.status(200).json({
             message: "User registered",
-            user
+            token
         });
     } catch(err) {
         console.log(err);

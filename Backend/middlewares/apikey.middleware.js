@@ -1,4 +1,4 @@
-const { getApiKeyData } = require("../services");
+const { getApiKeyData } = require("../services/config/apiKeyStore");
 
 
 module.exports = async (req, res, next) => {
