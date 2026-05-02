@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 
 export default function Dashboard({ token, setToken, goToAnalytics }) {
     const [keys, setKeys] = useState([]);
 
     const fetchKeys = async () => {
-        const res = await axios.get("http://localhost:3000/api/keys", {
+        const res = await axios.get(`${API_URL}/api/keys`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         setKeys(res.data);
@@ -14,7 +15,7 @@ export default function Dashboard({ token, setToken, goToAnalytics }) {
     const generateKey = async () => {
         try {
             await axios.post(
-                "http://localhost:3000/api/generate-key",
+                `${API_URL}/api/generate-key`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -28,7 +29,7 @@ export default function Dashboard({ token, setToken, goToAnalytics }) {
         if (!window.confirm("Delete this key?")) return;
 
         await axios.delete(
-            `http://localhost:3000/api/keys/${key}`,
+            `${API_URL}/api/keys/${key}`,
             { headers: { Authorization: `Bearer ${token}` } }
         );
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 
 export default function Signup({ setToken, switchToLogin }) {
     const [email, setEmail] = useState("");
@@ -8,7 +9,7 @@ export default function Signup({ setToken, switchToLogin }) {
     const handleSignup = async () => {
         try {
             const res = await axios.post(
-                "http://localhost:3000/api/auth/register",
+                `${API_URL}/api/auth/register`,
                 { email, password }
             );
 

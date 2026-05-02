@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
+import API_URL from "../config";
 
 export default function Analytics({apiKey, goBack }) {
     const [data, setData] = useState(null);
@@ -8,7 +9,7 @@ export default function Analytics({apiKey, goBack }) {
     const fetchAnalytics = async () => {
         try {
             const res = await axios.post(
-                "http://localhost:3000/api/analytics",
+                `${API_URL}/api/analytics`,
                 { apiKey }
             );
 
