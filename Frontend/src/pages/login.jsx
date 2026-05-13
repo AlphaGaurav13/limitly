@@ -1,66 +1,89 @@
 import { useState } from "react"
-
 import axios from "axios"
 import API_URL from "../config"
 
 export default function Login({ setToken, switchToSignup }) {
     const [email, setEmail] = useState("");
-
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-
-    const handleLogin = async () => {
-         if (!email || !password) {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
             alert("Enter email and password");
             return;
         }
+        setLoading(true);
         try {
             const res = await axios.post(
                 `${API_URL}/api/auth/login`,
                 { email, password }
             );
-
             localStorage.setItem('token', res.data.token);
             setToken(res.data.token);
-        }catch(err) {
+        } catch(err) {
             console.error(err.response?.data);
             alert("Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
-
     return (
-  <div
-    style={{
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      flexDirection: "column",
-      gap: "10px"
-    }}
-  >
-    <h2>Login</h2>
+        <div className="auth-page">
+            <div className="auth-card">
+                <div className="auth-brand">
+                    <div className="logo-text">
+                        Limitly<span className="logo-dot">.</span>
+                    </div>
+                    <p className="auth-subtitle">Sign in to your account</p>
+                </div>
 
-    <input
-      placeholder="Email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
+                <form className="auth-form" onSubmit={handleLogin}>
+                    <div className="form-group">
+                        <label htmlFor="login-email">Email</label>
+                        <input
+                            id="login-email"
+                            className="form-input"
+                            type="email"
+                            placeholder="you@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="email"
+                        />
+                    </div>
 
-    <input
-      placeholder="Password"
-      type="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
+                    <div className="form-group">
+                        <label htmlFor="login-password">Password</label>
+                        <input
+                            id="login-password"
+                            className="form-input"
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
+                        />
+                    </div>
 
-    <button onClick={handleLogin}>Login</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary btn-full"
+                        disabled={loading}
+                        style={{ marginTop: '8px' }}
+                    >
+                        {loading ? "Signing in..." : "Sign In"}
+                        {!loading && <span style={{ fontSize: '1.1em' }}>→</span>}
+                    </button>
+                </form>
 
-    <p>
-      Don't have an account?{" "}
-      <button onClick={switchToSignup}>Signup</button>
-    </p>
-  </div>
-);
+                <div className="auth-footer">
+                    Don't have an account?{" "}
+                    <button className="auth-link" onClick={switchToSignup}>
+                        Create one
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 }

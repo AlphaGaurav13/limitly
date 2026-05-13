@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 import Analytics from "./pages/Analytics";
 import Login from "./pages/login";
 import Signup from "./pages/Signup";
