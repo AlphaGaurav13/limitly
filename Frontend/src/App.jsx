@@ -5,11 +5,13 @@ import Login from "./pages/login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/dashboard";
 import LandingPage from "./pages/LandingPage";
+import Docs from "./pages/Docs";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [page, setPage] = useState("landing"); // landing | login | signup
   const [selectedApiKey, setselectedApiKey] = useState(null);
+  const [showDocs, setShowDocs] = useState(false);
 
   // If not logged in, show landing/login/signup
   if (!token) {
@@ -40,6 +42,11 @@ function App() {
     );
   }
 
+  // Logged in — show docs page
+  if (showDocs) {
+    return <Docs token={token} goBack={() => setShowDocs(false)} />;
+  }
+
   // Logged in — show analytics or dashboard
   if (selectedApiKey) {
     return (
@@ -47,7 +54,14 @@ function App() {
     );
   }
 
-  return <Dashboard token={token} setToken={setToken} goToAnalytics={setselectedApiKey} />;
+  return (
+    <Dashboard
+      token={token}
+      setToken={setToken}
+      goToAnalytics={setselectedApiKey}
+      goToDocs={() => setShowDocs(true)}
+    />
+  );
 }
 
 export default App;
