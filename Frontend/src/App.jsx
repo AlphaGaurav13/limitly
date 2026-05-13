@@ -4,32 +4,50 @@ import Analytics from "./pages/Analytics";
 import Login from "./pages/login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/dashboard";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [showSignup, setShowSignup] = useState(false);
+  const [page, setPage] = useState("landing"); // landing | login | signup
   const [selectedApiKey, setselectedApiKey] = useState(null);
 
-  
-
-  if(!token) {
-    return showSignup ? (
-    <Signup setToken={setToken} switchToLogin={() => setShowSignup(false)} />
-    ) : (
-    <Login setToken={setToken} switchToSignup={() => setShowSignup(true)} />
-    );
-  }
-
-
-  if(selectedApiKey) {
+  // If not logged in, show landing/login/signup
+  if (!token) {
+    if (page === "login") {
+      return (
+        <Login
+          setToken={setToken}
+          switchToSignup={() => setPage("signup")}
+          goBack={() => setPage("landing")}
+        />
+      );
+    }
+    if (page === "signup") {
+      return (
+        <Signup
+          setToken={setToken}
+          switchToLogin={() => setPage("login")}
+          goBack={() => setPage("landing")}
+        />
+      );
+    }
+    // Default: landing page
     return (
-      <Analytics apiKey={selectedApiKey} goBack={() => setselectedApiKey(null)}/>
+      <LandingPage
+        onLogin={() => setPage("login")}
+        onSignup={() => setPage("signup")}
+      />
     );
   }
-  
-    return <Dashboard token={token} setToken={setToken} goToAnalytics={setselectedApiKey}/>;
-  
-    
+
+  // Logged in — show analytics or dashboard
+  if (selectedApiKey) {
+    return (
+      <Analytics apiKey={selectedApiKey} goBack={() => setselectedApiKey(null)} />
+    );
+  }
+
+  return <Dashboard token={token} setToken={setToken} goToAnalytics={setselectedApiKey} />;
 }
 
 export default App;

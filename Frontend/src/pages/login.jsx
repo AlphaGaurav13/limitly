@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import API_URL from "../config"
 
-export default function Login({ setToken, switchToSignup }) {
+export default function Login({ setToken, switchToSignup, goBack }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -32,6 +32,12 @@ export default function Login({ setToken, switchToSignup }) {
     return (
         <div className="auth-page">
             <div className="auth-card">
+                {goBack && (
+                    <button className="auth-back" onClick={goBack}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Back
+                    </button>
+                )}
                 <div className="auth-brand">
                     <div className="logo-text">
                         Limitly<span className="logo-dot">.</span>
