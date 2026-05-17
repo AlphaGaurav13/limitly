@@ -7,6 +7,7 @@ const limitRoutes = require("./routes/limit.routes");
 const authRoutes = require("./routes/auth.routes");
 const apiKeyRoutes = require("./routes/apiKey.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
+const demoRateLimiter = require("./routes/demoRateLimiter");
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", healthRoutes);
 app.use("/api", limitRoutes);
+app.use("/api", demoRateLimiter);
 app.use("/api", apiKeyRoutes);
 app.use("/api", analyticsRoutes);
 
