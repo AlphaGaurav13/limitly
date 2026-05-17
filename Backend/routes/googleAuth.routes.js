@@ -24,8 +24,9 @@ router.get("/google/callback",
     async (req, res) => {
         const token = jwt.sign(
             {
-                id: req.user._id,
-                email: req.user.email
+                userId: req.user._id,
+                email: req.user.email,
+                plan: req.user.plan || "free"
             },
             process.env.JWT_SECRET,
             {
