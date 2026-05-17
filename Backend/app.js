@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-
+const healthRoutes = require("./routes/healthRoutes");
 const limitRoutes = require("./routes/limit.routes");
 const authRoutes = require("./routes/auth.routes");
 const apiKeyRoutes = require("./routes/apiKey.routes");
@@ -32,6 +32,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api", healthRoutes);
 app.use("/api", limitRoutes);
 app.use("/api", apiKeyRoutes);
 app.use("/api", analyticsRoutes);
