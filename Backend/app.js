@@ -1,13 +1,20 @@
 const express = require("express");
+const  passport = require("passport");
+const session = require("express-session");
+require("./config/passport");
+
 const cors = require("cors");
 const app = express();
 
+const googleAuthRoutes = require("./routes/googleAuth.routes");
 const healthRoutes = require("./routes/healthRoutes");
 const limitRoutes = require("./routes/limit.routes");
 const authRoutes = require("./routes/auth.routes");
 const apiKeyRoutes = require("./routes/apiKey.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
 const demoRateLimiter = require("./routes/demoRateLimiter");
+
+
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -31,7 +38,17 @@ app.use(cors({
     credentials: true
 }));
 
+
+app.use(session({
+    secret: "limitlysecrey",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
+app.use("/api/auth", googleAuthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", healthRoutes);
 app.use("/api", limitRoutes);

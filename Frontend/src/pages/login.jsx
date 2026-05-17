@@ -45,50 +45,28 @@ export default function Login({ setToken, switchToSignup, goBack }) {
                     <p className="auth-subtitle">Sign in to your account</p>
                 </div>
 
-                <form className="auth-form" onSubmit={handleLogin}>
-                    <div className="form-group">
-                        <label htmlFor="login-email">Email</label>
-                        <input
-                            id="login-email"
-                            className="form-input"
-                            type="email"
-                            placeholder="you@example.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            autoComplete="email"
-                        />
-                    </div>
+               
 
-                    <div className="form-group">
-                        <label htmlFor="login-password">Password</label>
-                        <input
-                            id="login-password"
-                            className="form-input"
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            autoComplete="current-password"
-                        />
-                    </div>
+               
 
-                    <button
-                        type="submit"
-                        className="btn btn-primary btn-full"
-                        disabled={loading}
-                        style={{ marginTop: '8px' }}
-                    >
-                        {loading ? "Signing in..." : "Sign In"}
-                        {!loading && <span style={{ fontSize: '1.1em' }}>→</span>}
+                <button
+                    type="button"
+                    className="btn btn-google btn-full"
+                    onClick={() => {
+                    window.location.href =
+                    `${API_URL}/api/auth/google`;
+                    }}
+                >
+                    <img
+                        src="https://www.svgrepo.com/show/475656/google-color.svg"
+                    alt="Google"
+                    width="20"
+                    height="20"
+                    />
+                    Continue with Google
                     </button>
-                </form>
 
-                <div className="auth-footer">
-                    Don't have an account?{" "}
-                    <button className="auth-link" onClick={switchToSignup}>
-                        Create one
-                    </button>
-                </div>
+                
             </div>
         </div>
     );

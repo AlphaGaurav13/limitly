@@ -85,7 +85,7 @@ fetch("https://your-api.com/endpoint", {
                     </div>
                     <div className="landing-nav-actions">
                         <button className="btn btn-ghost" onClick={onLogin}>Login</button>
-                        <button className="btn btn-primary" onClick={onSignup}>
+                        <button className="btn btn-primary" onClick={onLogin}>
                             Start for Free
                             <span style={{ fontSize: '1.1em' }}>↗</span>
                         </button>

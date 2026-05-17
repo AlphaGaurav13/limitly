@@ -6,13 +6,18 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/dashboard";
 import LandingPage from "./pages/LandingPage";
 import Docs from "./pages/Docs";
-
+import OAuthSuccess from "./pages/OAuthSuccess";
 function App() {
+  
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [page, setPage] = useState("landing"); // landing | login | signup
   const [selectedApiKey, setselectedApiKey] = useState(null);
   const [showDocs, setShowDocs] = useState(false);
+  const isOAuthSuccess = window.location.pathname === "/oauth-success";
 
+  if (isOAuthSuccess) {
+    return <OAuthSuccess setToken={setToken} />;  
+  }
   // If not logged in, show landing/login/signup
   if (!token) {
     if (page === "login") {
