@@ -1,18 +1,23 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
+
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'
+                dir('Backend') {
+                    bat 'npm install'
+                }
             }
         }
-
 
         stage('Run Tests') {
             steps {
-                bat 'npm test'
+                dir('Backend') {
+                    bat 'npm test'
+                }
             }
         }
+
     }
 }
