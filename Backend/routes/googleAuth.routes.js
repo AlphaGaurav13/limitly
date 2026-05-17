@@ -33,8 +33,9 @@ router.get("/google/callback",
             }
         );
 
+        const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
         res.redirect(
-            `http://localhost:5173/oauth-success?token=${token}`
+            `${frontendURL}/oauth-success?token=${token}`
         );
     }
 );
