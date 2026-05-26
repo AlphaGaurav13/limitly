@@ -90,7 +90,7 @@ export default function Dashboard({ token, setToken, goToAnalytics, goToDocs }) 
             <div className="dashboard-content">
                 <div className="dashboard-title-row">
                     <div>
-                        <h2>API Keys</h2>
+                        <h2>API Keys here are we</h2>
                         <p style={{ marginTop: '4px', fontSize: '0.9rem' }}>
                             Manage your rate-limiting API keys
                         </p>
