@@ -530,7 +530,7 @@ curl -X POST ${baseUrl}/api/check-limit \\
                     <footer className="docs-footer">
                         <p>
                             Built with ❤️ by <span className="text-accent">Limitly</span> • Need help?{" "}
-                            <a href="https://github.com" target="_blank" rel="noreferrer">Open an issue on GitHub</a>
+                            <a href="https://github.com/AlphaGaurav13/limitly" target="_blank" rel="noreferrer">Open an issue on GitHub</a>
                         </p>
                     </footer>
                 </main>
